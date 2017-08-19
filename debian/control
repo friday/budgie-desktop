@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: David Mohammed <fossfreedom@ubuntu.com>
 Homepage: https://solus-project.com/budgie/
 Build-Depends:
- debhelper (>= 10),
+ debhelper (>= 9),
  gir1.2-gee-0.8,
  gnome-common,
  gobject-introspection,

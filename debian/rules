@@ -22,6 +22,10 @@ ifeq ($(shell dpkg-vendor --derives-from Ubuntu && echo ubuntu),ubuntu)
 	patch -p1 < debian/ubuntu/show_nm-applet_in_tray.patch
 	touch ./debian/ubuntu/applied
 endif
+	cd src/theme && sassc -M -t compressed ./3.20/theme.scss theme_3.20.css
+	cd src/theme && sassc -M -t compressed ./3.18/theme.scss theme_3.18.css
+	cd src/theme && sassc -M -t compressed ./3.20/theme_hc.scss theme_hc_3.20.css
+	cd src/theme && sassc -M -t compressed ./3.18/theme_hc.scss theme_hc_3.18.css
 	mkdir -p debian/build
 	cd debian/build && LDFLAGS="-Wl,-z,now -Wl,-z,relro" meson --buildtype plain --prefix=/usr --libdir=/usr/lib --sysconfdir=/etc ../..
 

@@ -1,6 +1,7 @@
-budgie-desktop (10.4-0ubuntu5) zesty; urgency=medium
+budgie-desktop (10.4-0ubuntu5~xenial) xenial; urgency=medium
 
   * add budgie-core.postinst to tell user to reboot
+  * add 318 patch for xenial
 
  -- David Mohammed <fossfreedom@ubuntu.com>  Sat, 19 Aug 2017 08:00:25 +0100
 
