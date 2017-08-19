@@ -1,4 +1,10 @@
-budgie-desktop (10.4-1) unstable; urgency=medium
+budgie-desktop (10.4-0ubuntu5) zesty; urgency=medium
+
+  * add budgie-core.postinst to tell user to reboot
+
+ -- David Mohammed <fossfreedom@ubuntu.com>  Sat, 19 Aug 2017 08:00:25 +0100
+
+budgie-desktop (10.4-0ubuntu4) zesty; urgency=medium
 
   * New upstream release
   * Packaging Changes

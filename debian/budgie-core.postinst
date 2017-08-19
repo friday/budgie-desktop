@@ -1,0 +1,4 @@
+#DEBHELPER#
+
+[ -x /usr/share/update-notifier/notify-reboot-required ] && \
+/usr/share/update-notifier/notify-reboot-required || true
