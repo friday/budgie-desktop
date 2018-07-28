@@ -1,3 +1,4 @@
+using Gtk;
 /*
  * This file is part of budgie-desktop
  * Copyright © 2017-2018 Ubuntu Budgie Developers, 2018 Budgie Desktop Developers
@@ -346,7 +347,6 @@ namespace BudgieQuickNoteApplet {
             );
             newtext = get_qntext(qn_settings, "custompath");
             steps = {newtext};
-            initialiseLocaleLanguageSupport();
             /* box */
             indicatorBox = new Gtk.EventBox();
             add(indicatorBox);
@@ -381,18 +381,6 @@ namespace BudgieQuickNoteApplet {
         {
             this.manager = manager;
             manager.register_popover(indicatorBox, popover);
-        }
-
-        public void initialiseLocaleLanguageSupport(){
-            // Initialize gettext
-            GLib.Intl.setlocale(GLib.LocaleCategory.ALL, "");
-            GLib.Intl.bindtextdomain(
-                Config.GETTEXT_PACKAGE, Config.PACKAGE_LOCALEDIR
-            );
-            GLib.Intl.bind_textdomain_codeset(
-                Config.GETTEXT_PACKAGE, "UTF-8"
-            );
-            GLib.Intl.textdomain(Config.GETTEXT_PACKAGE);
         }
     }
 }
