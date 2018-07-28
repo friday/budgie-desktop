@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="budgie">
-    <schema id="com.solus-project.quicknote">
+    <schema path="/com/solus-project/quicknote/"
+            id="com.solus-project.quicknote">
         <key type="i" name="width">
             <summary>Window width</summary>
             <description>Popup window width</description>
