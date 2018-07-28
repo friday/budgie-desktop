@@ -61,7 +61,7 @@ namespace SupportingFunctions {
 }
 
 
-namespace BudgieQuickNoteApplet {
+namespace QuickNoteApplet {
 
     private ScrolledWindow win;
     private GLib.Settings qn_settings;
@@ -99,7 +99,7 @@ namespace BudgieQuickNoteApplet {
     }
 
 
-    public class BudgieQuickNoteSettings : Gtk.Grid {
+    public class QuickNoteSettings : Gtk.Grid {
         /* Budgie Settings -section */
         private Scale[] scales = {};
         private CheckButton usecustom;
@@ -122,7 +122,7 @@ namespace BudgieQuickNoteApplet {
             this.dir_entry.set_text(newtext);
         }
 
-        public BudgieQuickNoteSettings(GLib.Settings? settings) {
+        public QuickNoteSettings(GLib.Settings? settings) {
             /* max string length in dir_entry */
             maxlen = 20;
             int app_width = qn_settings.get_int("width");
@@ -219,14 +219,14 @@ namespace BudgieQuickNoteApplet {
     }
 
 
-    public class Plugin : Budgie.Plugin, Peas.ExtensionBase {
+    public class QuickNote : Budgie.Plugin, Peas.ExtensionBase {
         public Budgie.Applet get_panel_widget(string uuid) {
-            return new Applet();
+            return new QuickNoteApplet();
         }
     }
 
 
-    public class BudgieQuickNotePopover : Budgie.Popover {
+    public class QuickNotePopover : Budgie.Popover {
         private Gtk.EventBox indicatorBox;
         private Gtk.Image indicatorIcon;
         Button[] doredobuttons;
@@ -282,11 +282,11 @@ namespace BudgieQuickNoteApplet {
             update_steps = true;
         }
 
-        public BudgieQuickNotePopover(Gtk.EventBox indicatorBox) {
+        public QuickNotePopover(Gtk.EventBox indicatorBox) {
             GLib.Object(relative_to: indicatorBox);
             this.indicatorBox = indicatorBox;
             this.indicatorIcon = new Gtk.Image.from_icon_name(
-                "quicknote-symbolic", Gtk.IconSize.MENU
+                "quicknote-applet-symbolic", Gtk.IconSize.MENU
             );
             indicatorBox.add(this.indicatorIcon);
             Grid maingrid = new Gtk.Grid();
@@ -323,10 +323,10 @@ namespace BudgieQuickNoteApplet {
     }
 
 
-    public class Applet : Budgie.Applet {
+    public class QuickNoteApplet : Budgie.Applet {
 
         private Gtk.EventBox indicatorBox;
-        private BudgieQuickNotePopover popover = null;
+        private QuickNotePopover popover = null;
         private unowned Budgie.PopoverManager? manager = null;
         public string uuid { public set; public get; }
         /* specifically to the settings section */
@@ -336,12 +336,12 @@ namespace BudgieQuickNoteApplet {
         }
         public override Gtk.Widget? get_settings_ui()
         {
-            return new BudgieQuickNoteSettings(this.get_applet_settings(uuid));
+            return new QuickNoteSettings(this.get_applet_settings(uuid));
         }
 
-        public Applet() {
+        public QuickNoteApplet() {
             qn_settings = SupportingFunctions.get_settings(
-                "org.solus-project.quicknote"
+                "com.solus-project.quicknote"
             );
             newtext = get_qntext(qn_settings, "custompath");
             steps = {newtext};
@@ -349,7 +349,7 @@ namespace BudgieQuickNoteApplet {
             indicatorBox = new Gtk.EventBox();
             add(indicatorBox);
             /* Popover */
-            popover = new BudgieQuickNotePopover(indicatorBox);
+            popover = new QuickNotePopover(indicatorBox);
             /* On Press indicatorBox */
             indicatorBox.button_press_event.connect((e)=> {
                 if (e.button != 1) {
@@ -389,6 +389,6 @@ public void peas_register_types(TypeModule module){
     /* boilerplate - all modules need this */
     var objmodule = module as Peas.ObjectModule;
     objmodule.register_extension_type(typeof(
-        Budgie.Plugin), typeof(BudgieQuickNoteApplet.Plugin)
+        Budgie.Plugin), typeof(QuickNoteApplet.QuickNote)
     );
 }
