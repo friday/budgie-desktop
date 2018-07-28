@@ -1,23 +1,14 @@
-using Gtk;
-
-/* 
-* QuickNote II
-* Author: Jacob Vlijm
-* Copyright © 2017-2018 Ubuntu Budgie Developers
-* Website=https://ubuntubudgie.org
-* This program is free software: you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the Free
-* Software Foundation, either version 3 of the License, or any later version.
-* This program is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-* more details. You should have received a copy of the GNU General Public
-* License along with this program.  If not, see
-* <https://www.gnu.org/licenses/>.
+/*
+ * This file is part of budgie-desktop
+ * Copyright © 2017-2018 Ubuntu Budgie Developers, 2018 Budgie Desktop Developers
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
 */
 
 namespace SupportingFunctions {
-    /* 
+    /*
     * Here we keep the (possibly) shared stuff, or general functions, to
     * keep the main code clean and readable
     */
@@ -30,7 +21,7 @@ namespace SupportingFunctions {
             temparr = arr_in[remove:currlen];
             return temparr;
         }
-        return arr_in;    
+        return arr_in;
     }
 
     private int get_buttonindex (
@@ -69,7 +60,7 @@ namespace SupportingFunctions {
 }
 
 
-namespace BudgieQuickNoteApplet { 
+namespace BudgieQuickNoteApplet {
 
     private ScrolledWindow win;
     private GLib.Settings qn_settings;
@@ -83,7 +74,7 @@ namespace BudgieQuickNoteApplet {
         string filepath = settings.get_string(key);
         if (filepath == "") {
             string homedir = Environment.get_home_dir();
-            string settingsdir = ".config/budgie-extras/quicknote";
+            string settingsdir = ".config/solus-project/quicknote";
             string custompath = GLib.Path.build_path(homedir, settingsdir);
             File file = File.new_for_path(custompath);
             try {
@@ -121,7 +112,7 @@ namespace BudgieQuickNoteApplet {
             if (lenstring > maxlen) {
                 string slice = text[
                     (lenstring - maxlen + 3) : lenstring
-                ]; 
+                ];
                 newtext = "...".concat(slice);
             }
             else {
@@ -202,10 +193,10 @@ namespace BudgieQuickNoteApplet {
                     trim_text(newpath);
                     qn_settings.set_string("custompath", newpath);
                 }
-            } 
+            }
             catch (SpawnError e) {
                 /* on error, do nothing. user cancelled most likely */
-            }           
+            }
         }
 
         private void act_oncustomtoggle(ToggleButton check) {
@@ -243,8 +234,8 @@ namespace BudgieQuickNoteApplet {
         int last_index;
 
         private void manage_text(TextBuffer buffer) {
-            /* 
-            * if undo/redo buttons are used, textfile should update, 
+            /*
+            * if undo/redo buttons are used, textfile should update,
             * but history should remain
             */
             if (update_steps == true) {
@@ -268,7 +259,7 @@ namespace BudgieQuickNoteApplet {
             int lensteps = steps.length;
             if (b_index == 0) {
                 if (this.last_index == 1000) {
-                    this.last_index = lensteps - 2;  
+                    this.last_index = lensteps - 2;
                 }
                 else {
                     this.last_index -= 1;
@@ -281,22 +272,22 @@ namespace BudgieQuickNoteApplet {
                     this.last_index = 0;
                 }
             }
-            else { 
+            else {
                 int len_steps = steps.length;
                 if (this.last_index < len_steps - 1) {
                     this.last_index += 1;
                     newtext = steps[this.last_index];
                     view.buffer.text = newtext;
                 }
-            } 
+            }
             update_steps = true;
-        } 
+        }
 
         public BudgieQuickNotePopover(Gtk.EventBox indicatorBox) {
             GLib.Object(relative_to: indicatorBox);
             this.indicatorBox = indicatorBox;
             this.indicatorIcon = new Gtk.Image.from_icon_name(
-                "budgie-quicknote-symbolic", Gtk.IconSize.MENU
+                "quicknote-symbolic", Gtk.IconSize.MENU
             );
             indicatorBox.add(this.indicatorIcon);
             Grid maingrid = new Gtk.Grid();
@@ -351,7 +342,7 @@ namespace BudgieQuickNoteApplet {
 
         public Applet() {
             qn_settings = SupportingFunctions.get_settings(
-                "org.ubuntubudgie.plugins.budgie-quicknote"
+                "org.solus-project.quicknote"
             );
             newtext = get_qntext(qn_settings, "custompath");
             steps = {newtext};
@@ -378,7 +369,7 @@ namespace BudgieQuickNoteApplet {
                     int app_height = qn_settings.get_int("height");
                     win.set_size_request(app_width, app_height);
                     this.manager.show_popover(indicatorBox);
-                    
+
                 }
                 return Gdk.EVENT_STOP;
             });
